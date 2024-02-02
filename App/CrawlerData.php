@@ -4,34 +4,30 @@ namespace App;
 
 class CrawlerData
 {
-    // 港口
-    protected $portCodes = [
-        102, // 新海港
-        101, // 秀英港
-    ];
-
     // 港口中文描述
-    protected $portCodeDesc = [
+    const PORT_CODE_DESC = [
         102 => '新海港',
         101 => '秀英港',
     ];
 
-    # 日期
-    protected $clickDays = [
-        '2024-2-4',
-        '2024-2-5',
-        '2024-2-6',
-        '2024-2-7',
-        '2024-2-8',
-    ];
-
     protected $notify;
+
     protected $digitalStrait;
+
+    // 港口
+    protected $portCodes;
+
+    // 日期
+    protected $clickDays;
 
     public function __construct()
     {
         $this->notify = new Notify();
         $this->digitalStrait = new DigitalStrait();
+
+        $config = CONFIG['crawler']['digitalstrait'];
+        $this->clickDays = $config['date'];
+        $this->portCodes = $config['port_code'];
     }
 
     public function run()
@@ -47,12 +43,12 @@ class CrawlerData
                 }
                 if (!empty($ticketData)) {
                     var_dump('---');
-                    var_dump("[{$clickDay}]-[{$this->portCodeDesc[$portCode]}]-有剩余票数!!!");
+                    var_dump("[{$clickDay}]-[" . self::PORT_CODE_DESC[$portCode] . "]-有剩余票数!!!");
                     var_dump($ticketData);
                     var_dump('---');
                     $this->notify->formatMultiDataToTextContentAndSend($ticketData, '琼州海峡放票通知');
                 } else {
-                    var_dump("[{$clickDay}]-[{$this->portCodeDesc[$portCode]}]-没有剩余票数");
+                    var_dump("[{$clickDay}]-[" . self::PORT_CODE_DESC[$portCode] . "]-没有剩余票数");
                 }
             }
         }

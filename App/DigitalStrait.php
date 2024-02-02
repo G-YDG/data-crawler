@@ -9,13 +9,12 @@ class DigitalStrait
 {
     protected $client;
 
-    protected $cookie;
+    protected $config;
 
     public function __construct()
     {
-        $this->client = new Client(['base_uri' => 'http://hxwx.digitalstrait.cn', 'verify' => false]);
-
-        $this->cookie = CONFIG['digitalstrait']['cookie'];
+        $this->config = CONFIG['digitalstrait'];
+        $this->client = new Client(['base_uri' => $this->config['base_uri'] ?? 'http://hxwx.digitalstrait.cn', 'verify' => false]);
     }
 
     public function getFlightList($clickDay, $portCode = 102): array
@@ -23,8 +22,8 @@ class DigitalStrait
         $response = $this->client->get('/WxFerryMobile/FlightList/Index', [
             'headers' => [
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x6309091b) XWEB/8519 Flue',
-                'Referer' => 'http://hxwx.digitalstrait.cn/WxFerryMobile/Home/Index_tic?shipLineCode=HKHA&portCode=' . $portCode,
-                'Cookie' => $this->cookie,
+                'Referer' => $this->config['base_uri'] . '/WxFerryMobile/Home/Index_tic?shipLineCode=HKHA&portCode=' . $portCode,
+                'Cookie' => $this->config['cookie'],
             ],
             'query' => [
                 'clickDay' => $clickDay,
