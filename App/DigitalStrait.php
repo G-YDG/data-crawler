@@ -57,11 +57,11 @@ class DigitalStrait
             $data[] = [
                 '日期' => $clickDay,
                 '航班' => $i,
-                '开航时间' => $departureTime,
-                '发出港' => $departurePort,
                 '航班代号' => $flightCode,
-                '预计到达时间' => $arrivalTime,
+                '发出港' => $departurePort,
                 '到达港' => $arrivalPort,
+                '开航时间' => $departureTime,
+                '到达时间' => $arrivalTime,
                 '剩余票数' => $remainingTickets,
                 '检测时间' => date('Y-m-d H:i:s')
             ];

@@ -2,7 +2,7 @@
 
 namespace App;
 
-class CrawlerData
+class CrawlerDigitalStraitData
 {
     // 港口中文描述
     const PORT_CODE_DESC = [
